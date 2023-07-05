@@ -49,7 +49,7 @@ class _HomeState extends State<Home> {
               children: <Widget>[
                 Text(
                   'Good Construction',
-                  style: TextStyle(
+                  style: poppinsTextStyle.copyWith(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
                     color: Color(0xffD4A373)
@@ -58,7 +58,7 @@ class _HomeState extends State<Home> {
                 SizedBox(height: 8,),
                 Text(
                   'Good Investment',
-                  style: TextStyle(
+                  style: poppinsTextStyle.copyWith(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                     color: Colors.black
@@ -70,7 +70,7 @@ class _HomeState extends State<Home> {
                   child: Text(
                     '"Quality construction is an investment for the future"',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: poppinsTextStyle.copyWith(
                       fontSize: 17,
                       fontWeight: FontWeight.w400,
                       color: Colors.black
@@ -93,7 +93,7 @@ class _HomeState extends State<Home> {
               child: Center(
                 child: Text(
                   'Get Started',
-                  style: TextStyle(
+                  style: poppinsTextStyle.copyWith(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: Colors.white
