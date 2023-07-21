@@ -13,6 +13,16 @@ void getToast(String text) {
     fontSize: 16.0,
   );
 }
+
+String formatCurrency(double price) {
+    final formatCurrency = NumberFormat.currency(
+      locale: 'id_ID', // Menggunakan format Rupiah (IDR)
+      symbol: 'Rp', // Simbol mata uang (bisa diganti dengan 'IDR' jika diinginkan)
+      decimalDigits: 0, // Jumlah digit desimal yang ingin ditampilkan (0 untuk bulat)
+    );
+    return formatCurrency.format(price);
+  }
+
 String dateFormatddMMMMyyyyhhmm(DateTime? date) {
   if (date != null)
     return '${DateFormat(

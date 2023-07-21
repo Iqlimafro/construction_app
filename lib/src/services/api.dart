@@ -166,7 +166,7 @@ class ApiService extends GetConnect with BaseController {
       "layanan": layanan,
       "image": image,
       "status": 'Menunggu',
-      "harga": 'Menunggu',
+      "harga": '0',
       "upload_bukti": 'Menunggu',
     });
     final response = await BaseClient()

@@ -8,6 +8,8 @@ const String mitraRoute = '/mitra';
 const String detailOrderMitra = '/detailOrderMitra';
 const String detailKontraktorRoute = '/detailkontraktor';
 const String order = '/order';
+const String bukti = '/bukti';
+const String gambar = '/gambar';
 const String profile = '/profile';
 const String myOrder = '/myorder';
 

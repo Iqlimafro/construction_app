@@ -1,3 +1,5 @@
+import 'package:construction_app/src/pages/Bukti/index.dart';
+import 'package:construction_app/src/pages/Images/index.dart';
 import 'package:construction_app/src/pages/Login/index.dart';
 import 'package:construction_app/src/pages/Mitra/Dashboard/index.dart';
 import 'package:construction_app/src/pages/Mitra/DetailOrder/index.dart';
@@ -19,6 +21,8 @@ final List<GetPage<dynamic>>? routes = [
   GetPage(name: detailKontraktorRoute, page: () => DetailKontraktor()),
   GetPage(name: detailOrderMitra, page: () => DetailOrderMitra()),
   GetPage(name: order, page: () => Order()),
+  GetPage(name: gambar, page: () => ViewImage()),
+  GetPage(name: bukti, page: () => Bukti()),
   GetPage(name: myOrder, page: () => MyOrder()),
   GetPage(name: profile, page: () => ProfileUser()),
 ];

@@ -1,4 +1,5 @@
 import 'package:construction_app/src/pages/Home/index.dart';
+import 'package:construction_app/src/pages/Images/index.dart';
 import 'package:construction_app/src/pages/Login/index.dart';
 import 'package:construction_app/src/pages/Mitra/Dashboard/index.dart';
 import 'package:construction_app/src/pages/Mitra/DetailOrder/index.dart';
@@ -19,6 +20,6 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
-    return DetailOrderMitra();
+    return LoginPage();
   }
 }

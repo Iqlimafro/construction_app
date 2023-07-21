@@ -117,8 +117,10 @@ class _MitraState extends State<Mitra> {
                               return Padding(
                                 padding: EdgeInsets.only(bottom: 8),
                                 child: InkWell(
-                                  onTap: () => Get.toNamed(detailOrderMitra, arguments: [
+                                  onTap: () =>
+                                      Get.toNamed(detailOrderMitra, arguments: [
                                     order.order.value.data![index].id,
+                                    order.order.value.data![index].nama,
                                     order.order.value.data![index].telp,
                                     order.order.value.data![index].alamat,
                                     order.order.value.data![index].layanan,
@@ -126,7 +128,6 @@ class _MitraState extends State<Mitra> {
                                     order.order.value.data![index].status,
                                     order.order.value.data![index].harga,
                                     order.order.value.data![index].uploadBukti,
-                                    order.order.value.data![index].harga,
                                   ]),
                                   child: Container(
                                     height: 100,
@@ -145,7 +146,8 @@ class _MitraState extends State<Mitra> {
                                           padding:
                                               const EdgeInsets.only(left: 10),
                                           child: Image.network(
-                                            order.order.value.data![index].image!,
+                                            order.order.value.data![index]
+                                                .image!,
                                             height: 50,
                                             width: 50,
                                             fit: BoxFit.fill,
@@ -155,7 +157,8 @@ class _MitraState extends State<Mitra> {
                                           width: 10,
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(top: 18),
+                                          padding:
+                                              const EdgeInsets.only(top: 18),
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -170,8 +173,8 @@ class _MitraState extends State<Mitra> {
                                                   ),
                                                   SizedBox(width: 5),
                                                   Text(
-                                                    order.order.value.data![index]
-                                                        .nama!,
+                                                    order.order.value
+                                                        .data![index].nama!,
                                                     style: TextStyle(
                                                         fontSize: 15,
                                                         color: Colors.white),
@@ -189,8 +192,8 @@ class _MitraState extends State<Mitra> {
                                                   ),
                                                   SizedBox(width: 5),
                                                   Text(
-                                                    order.order.value.data![index]
-                                                        .alamat!,
+                                                    order.order.value
+                                                        .data![index].alamat!,
                                                     style: TextStyle(
                                                         fontSize: 15,
                                                         color: Colors.white),
@@ -208,8 +211,8 @@ class _MitraState extends State<Mitra> {
                                                   ),
                                                   SizedBox(width: 5),
                                                   Text(
-                                                    order.order.value.data![index]
-                                                        .status!,
+                                                    order.order.value
+                                                        .data![index].status!,
                                                     style: TextStyle(
                                                         fontSize: 15,
                                                         color: Colors.white),

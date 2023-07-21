@@ -1,3 +1,4 @@
+import 'package:construction_app/src/config/constant_config.dart';
 import 'package:construction_app/src/routes/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,11 +11,23 @@ class DetailOrderMitra extends StatefulWidget {
 }
 
 class _DetailOrderMitraState extends State<DetailOrderMitra> {
+  String? selectedStatus;
+
+  var id = Get.arguments[0];
+  var nama = Get.arguments[1];
+  var telp = Get.arguments[2];
+  var alamat = Get.arguments[3];
+  var layanan = Get.arguments[4];
+  var image = Get.arguments[5];
+  var status = Get.arguments[6];
+  var harga = Get.arguments[7];
+  var uploadBukti = Get.arguments[8];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Expanded(
+        child: SingleChildScrollView(
           child: Column(children: [
             Stack(
               children: [
@@ -50,9 +63,10 @@ class _DetailOrderMitraState extends State<DetailOrderMitra> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 150, right: 20),
+                  padding: const EdgeInsets.only(
+                      left: 20, top: 150, right: 20, bottom: 12),
                   child: Container(
-                    height: 520,
+                    height: 670,
                     width: 380,
                     decoration: BoxDecoration(
                         color: whiteColor,
@@ -73,7 +87,7 @@ class _DetailOrderMitraState extends State<DetailOrderMitra> {
                             height: 12,
                           ),
                           Text(
-                            'Nama Pemesan',
+                            nama,
                             style: poppinsTextStyle.copyWith(
                                 fontSize: 21, fontWeight: FontWeight.bold),
                           ),
@@ -84,27 +98,34 @@ class _DetailOrderMitraState extends State<DetailOrderMitra> {
                             padding: EdgeInsets.only(left: 12),
                             child: Row(
                               children: [
-                                Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                      color: whiteColor,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.black87,
-                                            blurRadius: 2,
-                                            offset: Offset(0, 1))
-                                      ]),
-                                  child: Image.asset('assets/logo.png'),
+                                InkWell(
+                                  onTap: () => Get.toNamed(gambar,
+                                      arguments: [uploadBukti]),
+                                  child: Container(
+                                    height: 100,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                        color: whiteColor,
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Colors.black87,
+                                              blurRadius: 2,
+                                              offset: Offset(0, 1))
+                                        ]),
+                                    child: Image.network(
+                                      image,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
                                 ),
                                 SizedBox(
                                   width: 12,
                                 ),
                                 Text(
-                                  'Alamat Lengkap',
+                                  alamat,
                                   style: poppinsTextStyle.copyWith(
-                                    fontSize: 16,
-                                  ),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
@@ -118,12 +139,24 @@ class _DetailOrderMitraState extends State<DetailOrderMitra> {
                                 width: 12,
                               ),
                               Text(
+                                telp,
+                                style: poppinsTextStyle.copyWith(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 12,
+                              ),
+                              Text(
                                 'Layanan : ',
                                 style: poppinsTextStyle.copyWith(
                                     fontSize: 16, fontWeight: FontWeight.w500),
                               ),
                               Text(
-                                'Get disini',
+                                layanan,
                                 style: poppinsTextStyle.copyWith(
                                     fontSize: 16, fontWeight: FontWeight.w500),
                               ),
@@ -143,7 +176,7 @@ class _DetailOrderMitraState extends State<DetailOrderMitra> {
                                     fontSize: 16, fontWeight: FontWeight.w500),
                               ),
                               Text(
-                                'Get disini',
+                                status,
                                 style: poppinsTextStyle.copyWith(
                                     fontSize: 16, fontWeight: FontWeight.w500),
                               ),
@@ -161,26 +194,125 @@ class _DetailOrderMitraState extends State<DetailOrderMitra> {
                                 style: poppinsTextStyle.copyWith(
                                     fontSize: 16, fontWeight: FontWeight.bold),
                               ),
+                              Row(
+                                children: [
+                                  Container(
+                                    height: 37,
+                                    width: 180,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: whiteColor,
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Colors.black,
+                                              blurRadius: 2,
+                                              offset: Offset(0, 1))
+                                        ]),
+                                    child: TextField(
+                                        decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: 'Input Harga',
+                                      hintStyle:
+                                          TextStyle(color: Colors.black38),
+                                      filled: true,
+                                    )),
+                                  ),
+                                  SizedBox(
+                                    width: 12,
+                                  ),
+                                  Text(
+                                    'Rp.${harga}',
+                                    style: poppinsTextStyle.copyWith(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                'Update Status',
+                                style: poppinsTextStyle.copyWith(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                              DropdownButtonFormField<String>(
+                                value: selectedStatus,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    selectedStatus = newValue;
+                                  });
+                                },
+                                items: [
+                                  DropdownMenuItem(
+                                    value: "Di Tinjau",
+                                    child: Text("Di Tinjau"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: "Dikerjakan",
+                                    child: Text("Dikerjakan"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: "Menunggu Pembayaran",
+                                    child: Text("Menunggu Pembayaran"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: "Selesai",
+                                    child: Text("Selesai"),
+                                  ),
+                                ],
+                                decoration: InputDecoration(
+                                  hintText: "Update Status",
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Center(
+                                child: InkWell(
+                                  onTap: () => Get.toNamed(bukti,
+                                      arguments: [uploadBukti]),
+                                  child: Container(
+                                    height: 100,
+                                    width: 150,
+                                    decoration: BoxDecoration(
+                                        color: whiteColor,
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Colors.black87,
+                                              blurRadius: 2,
+                                              offset: Offset(0, 1))
+                                        ]),
+                                    child: Image.network(
+                                      uploadBukti,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 50,
+                              ),
                               Container(
-                                height: 37,
-                                width: 180,
+                                width: 320,
+                                height: 40,
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(17),
-                                    color: whiteColor,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12)),
                                     boxShadow: [
                                       BoxShadow(
-                                          color: Colors.black,
-                                          blurRadius: 2,
-                                          offset: Offset(0, 1))
-                                    ]),
-                                child: TextField(
-                                    decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Input Harga',
-                                  hintStyle: TextStyle(color: Colors.black),
-                                  filled: true,
+                                          blurRadius: 2, offset: Offset(0, 1))
+                                    ],
+                                    color: yellowMain,
+                                    border: Border.all(color: Colors.black)),
+                                child: Center(
+                                    child: Text(
+                                  'Update',
+                                  style: poppinsTextStyle.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 )),
-                              ),
+                              )
                             ],
                           )
                         ],
