@@ -18,6 +18,8 @@ class LoginController extends GetxController {
     if (response != null) {
       setToken(response.accessToken.toString());
       final profile = await ApiService().fetchUserProfile();
+      setUser(profile!.id.toString());
+      setName(profile!.username.toString());
 
       if (profile != null) {
         if (profile.role == "user") {

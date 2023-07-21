@@ -39,7 +39,7 @@ class _DetailKontraktor extends State<DetailKontraktor> {
                 decoration: BoxDecoration(
                   color: Colors.black,
                 ),
-                child: Image.asset(
+                child: Image.network(
                   logo,
                   fit: BoxFit.cover,
                 ),

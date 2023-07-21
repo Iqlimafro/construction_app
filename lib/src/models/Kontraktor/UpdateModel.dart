@@ -1,18 +1,18 @@
 import 'dart:convert';
 
-OrderModel orderFromJson(String str) => 
-  OrderModel.fromJson(json.decode(str));
+UpdateModel updatestatusFromJson(String str) =>
+    UpdateModel.fromJson(json.decode(str));
 
-String orderModelToJson(OrderModel data) => json.encode(data.toJson());
+String updatestatusToJson(UpdateModel data) => json.encode(data.toJson());
 
-class OrderModel {
+class UpdateModel {
   int? code;
   String? message;
   Data? data;
 
-  OrderModel({this.code, this.message, this.data});
+  UpdateModel({this.code, this.message, this.data});
 
-  OrderModel.fromJson(Map<String, dynamic> json) {
+  UpdateModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     message = json['message'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
@@ -30,8 +30,7 @@ class OrderModel {
 }
 
 class Data {
-  String? userId;
-  String? kontraktorId;
+  int? id;
   String? nama;
   String? telp;
   String? alamat;
@@ -40,13 +39,13 @@ class Data {
   String? status;
   String? harga;
   String? uploadBukti;
-  String? updatedAt;
+  String? kontraktorId;
+  String? userId;
   String? createdAt;
-  int? id;
+  String? updatedAt;
 
   Data(
-      {this.userId,
-      this.kontraktorId,
+      {this.id,
       this.nama,
       this.telp,
       this.alamat,
@@ -55,13 +54,13 @@ class Data {
       this.status,
       this.harga,
       this.uploadBukti,
-      this.updatedAt,
+      this.kontraktorId,
+      this.userId,
       this.createdAt,
-      this.id});
+      this.updatedAt});
 
   Data.fromJson(Map<String, dynamic> json) {
-    userId = json['user_id'];
-    kontraktorId = json['kontraktor_id'];
+    id = json['id'];
     nama = json['nama'];
     telp = json['telp'];
     alamat = json['alamat'];
@@ -70,15 +69,15 @@ class Data {
     status = json['status'];
     harga = json['harga'];
     uploadBukti = json['upload_bukti'];
-    updatedAt = json['updated_at'];
+    kontraktorId = json['kontraktor_id'];
+    userId = json['user_id'];
     createdAt = json['created_at'];
-    id = json['id'];
+    updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['user_id'] = this.userId;
-    data['kontraktor_id'] = this.kontraktorId;
+    data['id'] = this.id;
     data['nama'] = this.nama;
     data['telp'] = this.telp;
     data['alamat'] = this.alamat;
@@ -87,9 +86,10 @@ class Data {
     data['status'] = this.status;
     data['harga'] = this.harga;
     data['upload_bukti'] = this.uploadBukti;
-    data['updated_at'] = this.updatedAt;
+    data['kontraktor_id'] = this.kontraktorId;
+    data['user_id'] = this.userId;
     data['created_at'] = this.createdAt;
-    data['id'] = this.id;
+    data['updated_at'] = this.updatedAt;
     return data;
   }
 }

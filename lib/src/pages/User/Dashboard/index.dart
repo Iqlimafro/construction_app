@@ -1,5 +1,6 @@
 import 'package:construction_app/src/config/preference.dart';
 import 'package:construction_app/src/controllers/KontraktorController.dart';
+import 'package:construction_app/src/controllers/usercontroller.dart';
 import 'package:construction_app/src/routes/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,7 +14,9 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  final KontraktorController kontraktor = Get.put(KontraktorController());
+  KontraktorController kontraktor = Get.put(KontraktorController());
+  UserController username = Get.put(UserController());
+
   late PageController _pageController;
   List<String> images = [
     "https://images.wallpapersden.com/image/download/purple-sunrise-4k-vaporwave_bGplZmiUmZqaraWkpJRmbmdlrWZlbWU.jpg",
@@ -22,11 +25,24 @@ class _DashboardState extends State<Dashboard> {
   ];
 
   int activePage = 1;
+  String? name;
+
+  getAtribute() async {
+    name = await getName();
+
+    String? nama;
+
+    setState(() {
+      nama = name;
+    });
+  }
 
   @override
   void initState() {
+    getAtribute();
     super.initState();
     kontraktor.getKontraktor();
+
     _pageController = PageController(viewportFraction: 0.8, initialPage: 1);
   }
 
@@ -34,175 +50,194 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Container(
-        decoration: BoxDecoration(color: yellosSecond),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Icon(
-                    Icons.arrow_outward_rounded,
-                    color: Colors.white,
-                    size: 28,
-                  ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.asset(
-                      'assets/logo.png',
-                      fit: BoxFit.cover,
+          child: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(color: yellosSecond),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () => Get.toNamed(myOrder),
+                          child: Icon(
+                            Icons.shopping_cart_checkout_outlined,
+                            color: Colors.white,
+                            size: 28,
+                          ),
+                        ),
+                        Text(
+                          'Order Saya',
+                          style: poppinsTextStyle.copyWith(
+                              color: whiteColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600),
+                        )
+                      ],
                     ),
-                  ),
-                  Icon(
-                    Icons.display_settings,
-                    color: Colors.white,
-                    size: 28,
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Good Morning, \n User',
-                    textAlign: TextAlign.center,
-                    style: poppinsTextStyle.copyWith(
-                      color: Colors.white,
-                      fontSize: 18,
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        'assets/logo.png',
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Icon(
-                      Icons.people_sharp,
+                    Icon(
+                      Icons.display_settings,
                       color: Colors.white,
                       size: 28,
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 200,
-              child: PageView.builder(
-                  itemCount: images.length,
-                  pageSnapping: true,
-                  controller: _pageController,
-                  onPageChanged: (page) {
-                    setState(() {
-                      activePage = page;
-                    });
-                  },
-                  itemBuilder: (context, pagePosition) {
-                    bool active = pagePosition == activePage;
-                    return slider(images, pagePosition, active);
-                  }),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: indicators(images.length, activePage),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Container(
-              height: 350,
-              child: Obx(() {
-                if (kontraktor.isLoading.value) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else {
-                  return ListView.builder(
-                      itemCount: kontraktor.kontraktor.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 20),
-                          child: InkWell(
-                            onTap: () {
-                              int productId =
-                                  kontraktor.kontraktor[index].id ?? 0;
-                              setKontraktor(productId.toString());
-                              Get.toNamed(detailKontraktorRoute, arguments: [
-                                kontraktor.kontraktor[index].id,
-                                kontraktor.kontraktor[index].nama,
-                                kontraktor.kontraktor[index].alamat,
-                                kontraktor.kontraktor[index].logo,
-                                kontraktor.kontraktor[index].gambar,
-                                kontraktor.kontraktor[index].deskripsi,
-                                kontraktor.kontraktor[index].userId ?? ""
-                              ]);
-                            },
-                            child: Container(
-                              height: 150,
-                              decoration: BoxDecoration(
-                                  color: whiteColor,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 2,
-                                        blurRadius: 7,
-                                        offset: Offset(0, 7))
-                                  ]),
-                              child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Container(
-                                        height: 100,
-                                        width: 100,
-                                        child: Image.network(
-                                          kontraktor.kontraktor[index].logo!,
-                                          fit: BoxFit.cover,
-                                        )),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          kontraktor.kontraktor[index].nama!,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 12),
-                                        ),
-                                        SizedBox(
-                                          height: 20,
-                                        ),
-                                        Text(
-                                          kontraktor.kontraktor[index].alamat!,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 12),
-                                        )
-                                      ],
-                                    )
-                                  ]),
-                            ),
-                          ),
-                        );
+              SizedBox(
+                height: 40,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Good Morning, \n ${name}',
+                      textAlign: TextAlign.center,
+                      style: poppinsTextStyle.copyWith(
+                        color: Colors.white,
+                        fontSize: 18,
+                      ),
+                    ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Icon(
+                        Icons.people_sharp,
+                        color: Colors.white,
+                        size: 28,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: 200,
+                child: PageView.builder(
+                    itemCount: images.length,
+                    pageSnapping: true,
+                    controller: _pageController,
+                    onPageChanged: (page) {
+                      setState(() {
+                        activePage = page;
                       });
-                }
-              }),
-            )
-          ],
+                    },
+                    itemBuilder: (context, pagePosition) {
+                      bool active = pagePosition == activePage;
+                      return slider(images, pagePosition, active);
+                    }),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: indicators(images.length, activePage),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Container(
+                height: 350,
+                child: Obx(() {
+                  if (kontraktor.isLoading.value) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: kontraktor.kontraktor.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: InkWell(
+                              onTap: () {
+                                int productId =
+                                    kontraktor.kontraktor[index].id ?? 0;
+                                setKontraktor(productId.toString());
+                                Get.toNamed(detailKontraktorRoute, arguments: [
+                                  kontraktor.kontraktor[index].id,
+                                  kontraktor.kontraktor[index].nama,
+                                  kontraktor.kontraktor[index].alamat,
+                                  kontraktor.kontraktor[index].logo,
+                                  kontraktor.kontraktor[index].gambar,
+                                  kontraktor.kontraktor[index].deskripsi,
+                                  kontraktor.kontraktor[index].userId ?? ""
+                                ]);
+                              },
+                              child: Container(
+                                height: 150,
+                                decoration: BoxDecoration(
+                                    color: whiteColor,
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 2,
+                                          blurRadius: 7,
+                                          offset: Offset(0, 7))
+                                    ]),
+                                child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Container(
+                                          height: 100,
+                                          width: 100,
+                                          child: Image.network(
+                                            kontraktor.kontraktor[index].logo!,
+                                            fit: BoxFit.cover,
+                                          )),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            kontraktor.kontraktor[index].nama!,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 12),
+                                          ),
+                                          SizedBox(
+                                            height: 20,
+                                          ),
+                                          Text(
+                                            kontraktor
+                                                .kontraktor[index].alamat!,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 12),
+                                          )
+                                        ],
+                                      )
+                                    ]),
+                              ),
+                            ),
+                          );
+                        });
+                  }
+                }),
+              )
+            ],
+          ),
         ),
       )),
     );

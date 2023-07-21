@@ -15,6 +15,51 @@ Future removeToken() async {
   return shared.remove("Token");
 }
 
+Future setUser(String value) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.setString("id", value);
+}
+
+Future getUser() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString("id");
+}
+
+Future removeUser() async {
+  final SharedPreferences shared = await SharedPreferences.getInstance();
+  return shared.remove("id");
+}
+
+Future setName(String value) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.setString("name", value);
+}
+
+Future getName() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString("name");
+}
+
+Future removeName() async {
+  final SharedPreferences shared = await SharedPreferences.getInstance();
+  return shared.remove("name");
+}
+
+Future setMitra(String value) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.setString("mitra", value);
+}
+
+Future getMitra() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString("mitra");
+}
+
+Future removeMitra() async {
+  final SharedPreferences shared = await SharedPreferences.getInstance();
+  return shared.remove("mitra");
+}
+
 Future setOrder(String value) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.setString("id", value);
