@@ -231,7 +231,7 @@ class ApiService extends GetConnect with BaseController {
 
   Future<UpdateModel?> updateStatus(
       String id, String status, String harga) async {
-    dynamic body = ({"status": status, "status": status, "harga": harga});
+    dynamic body = ({"status": status, "harga": harga});
     final response = await BaseClient()
         .post(BASE_URL, '/update-form/$id', body, "")
         .catchError((error) {
