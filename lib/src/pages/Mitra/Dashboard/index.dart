@@ -131,7 +131,7 @@ class _MitraState extends State<Mitra> {
                                   ]),
                                   child: Container(
                                     height: 100,
-                                    width: 330,
+                                    width: 270,
                                     decoration: BoxDecoration(
                                         color: yellowMain,
                                         boxShadow: [

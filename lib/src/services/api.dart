@@ -167,7 +167,8 @@ class ApiService extends GetConnect with BaseController {
       "image": image,
       "status": 'Menunggu',
       "harga": '0',
-      "upload_bukti": 'Menunggu',
+      "upload_bukti":
+          'https://as1.ftcdn.net/v2/jpg/02/22/77/34/1000_F_222773401_EmjmVgyPgICRkPGdDC4mib4YDNMNgv2k.jpg',
     });
     final response = await BaseClient()
         .post(BASE_URL, '/add-form', body, "")
