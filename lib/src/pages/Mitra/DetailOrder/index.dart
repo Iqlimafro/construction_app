@@ -1,4 +1,5 @@
 import 'package:construction_app/src/config/constant_config.dart';
+import 'package:construction_app/src/controllers/UpdateStatusController.dart';
 import 'package:construction_app/src/routes/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,6 +23,14 @@ class _DetailOrderMitraState extends State<DetailOrderMitra> {
   var status = Get.arguments[6];
   var harga = Get.arguments[7];
   var uploadBukti = Get.arguments[8];
+  late TextEditingController hargaCon;
+  UpdateStatusController update = Get.put(UpdateStatusController());
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    hargaCon = TextEditingController(text: harga);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -209,13 +218,14 @@ class _DetailOrderMitraState extends State<DetailOrderMitra> {
                                               offset: Offset(0, 1))
                                         ]),
                                     child: TextField(
+                                        controller: hargaCon,
                                         decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: 'Input Harga',
-                                      hintStyle:
-                                          TextStyle(color: Colors.black38),
-                                      filled: true,
-                                    )),
+                                          border: InputBorder.none,
+                                          hintText: 'Input Harga',
+                                          hintStyle:
+                                              TextStyle(color: Colors.black38),
+                                          filled: true,
+                                        )),
                                   ),
                                   SizedBox(
                                     width: 12,
@@ -293,25 +303,31 @@ class _DetailOrderMitraState extends State<DetailOrderMitra> {
                               SizedBox(
                                 height: 50,
                               ),
-                              Container(
-                                width: 320,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(12)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          blurRadius: 2, offset: Offset(0, 1))
-                                    ],
-                                    color: yellowMain,
-                                    border: Border.all(color: Colors.black)),
-                                child: Center(
-                                    child: Text(
-                                  'Update',
-                                  style: poppinsTextStyle.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )),
+                              InkWell(
+                                onTap: () {
+                                  update.updateStatus(id.toString(),
+                                      selectedStatus!, hargaCon.text);
+                                },
+                                child: Container(
+                                  width: 320,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(12)),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            blurRadius: 2, offset: Offset(0, 1))
+                                      ],
+                                      color: yellowMain,
+                                      border: Border.all(color: Colors.black)),
+                                  child: Center(
+                                      child: Text(
+                                    'Update',
+                                    style: poppinsTextStyle.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )),
+                                ),
                               )
                             ],
                           )
